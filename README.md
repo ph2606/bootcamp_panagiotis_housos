@@ -13,6 +13,11 @@
 - Include all required files for grading.
 
 
+# Project Purpose
+
+This repository is a reproducible Python scaffold for my bootcamp project. It provides an isolated environment, organized folders for `data/`, `notebooks/`, and `src/`, a minimal configuration helper for environment variables, and a sanity-check notebook to confirm secrets and NumPy work correctly.
+
+
 # [Your Project Title]
 
 **Stage:** Problem Framing & Scoping (Stage 01)
