@@ -5,3 +5,17 @@ __pycache__/
 *.pyc
 # Ignore environment files
 .env
+# secrets & envs
+project/.env
+
+# data caches (keep raw/processed decisions up to you)
+project/data/*
+!project/data/raw/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+!project/data/processed/
+!project/data/processed/summary.csv
+!project/data/processed/summary.json
+!project/data/processed/hist.png

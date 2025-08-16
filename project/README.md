@@ -2,6 +2,11 @@
 
 **Stage:** Problem Framing & Scoping (Stage 01)
 
+
+# ASML Next-Day Movement Assistant — Tooling Setup
+
+This project is a reproducible scaffold for building a predictive next-day signal for ASML stock. The `project/` folder contains an isolated, organized workspace with `data/`, `notebooks/`, and `src/`, a `.env`-based configuration for secrets/paths, and a sanity-check notebook to verify environment and NumPy. This structure supports subsequent stages (ingestion, preprocessing, modeling, and reporting).
+
 ## Problem Statement
 
 ASML stock moves around earnings, guidance, sector flows, and macro prints. The project’s objective is to produce a small, reliable next-day signal for ASML (direction and expected size of the next-day close vs today’s close) that helps decide whether to enter, scale, or wait on a position. This keeps the work decision-linked and avoids a “model first” trap.
