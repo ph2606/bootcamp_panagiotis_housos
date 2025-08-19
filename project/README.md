@@ -2,7 +2,6 @@
 
 **Stage:** Problem Framing & Scoping (Stage 01)
 
-
 # ASML Next-Day Movement Assistant — Tooling Setup
 
 This project is a reproducible scaffold for building a predictive next-day signal for ASML stock. The `project/` folder contains an isolated, organized workspace with `data/`, `notebooks/`, and `src/`, a `.env`-based configuration for secrets/paths, and a sanity-check notebook to verify environment and NumPy. This structure supports subsequent stages (ingestion, preprocessing, modeling, and reporting).
@@ -38,6 +37,28 @@ ASML stock moves around earnings, guidance, sector flows, and macro prints. The 
 - Regime shifts (semis cycle, macro shocks); earnings/event gaps; selection bias
 - Leakage around events; will use time-based CV and event masking
 - Capacity/costs not modeled at this stage; focus is signal quality
+
+
+
+## Cleaning Strategy (Stage 06)
+
+**Goals:** produce a modeling-ready ASML dataset with minimal missingness and standardized numeric scales.
+
+**Functions (in `project/src/cleaning.py`):**
+
+- `fill_missing_median(df, cols=None)`: fills NaNs in numeric columns with median values (robust to outliers).
+- `drop_missing(df, cols=None)`: drops rows missing critical columns (when `cols` provided) or any column (when `cols=None`).
+- `normalize_data(df, cols=None, method="zscore"|"minmax")`: scales numeric columns; returns normalized DataFrame and parameters.
+
+**Workflow:**
+
+1. Load latest raw CSV from `project/data/raw/`.
+2. `drop_missing` on critical fields (`date`, `close`).
+3. `fill_missing_median` on remaining numeric columns.
+4. `normalize_data` (default z-score).
+5. Save cleaned outputs to `project/data/processed/` as timestamped CSV + Parquet.
+
+**Assumptions & Risks:** EOD equity data; educational use; median imputation is appropriate for light missingness; scaling stats should be versioned if used across train/test splits.
 
 ## Lifecycle Mapping
 
