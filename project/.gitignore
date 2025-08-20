@@ -19,3 +19,4 @@ project/data/*
 !project/data/processed/summary.csv
 !project/data/processed/summary.json
 !project/data/processed/hist.png
+!project/data/processed/outliers/

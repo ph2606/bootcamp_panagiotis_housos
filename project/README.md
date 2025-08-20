@@ -38,8 +38,6 @@ ASML stock moves around earnings, guidance, sector flows, and macro prints. The 
 - Leakage around events; will use time-based CV and event masking
 - Capacity/costs not modeled at this stage; focus is signal quality
 
-
-
 ## Cleaning Strategy (Stage 06)
 
 **Goals:** produce a modeling-ready ASML dataset with minimal missingness and standardized numeric scales.
@@ -59,6 +57,31 @@ ASML stock moves around earnings, guidance, sector flows, and macro prints. The 
 5. Save cleaned outputs to `project/data/processed/` as timestamped CSV + Parquet.
 
 **Assumptions & Risks:** EOD equity data; educational use; median imputation is appropriate for light missingness; scaling stats should be versioned if used across train/test splits.
+
+
+
+## Outliers & Risk Assumptions (Stage 07)
+
+**Definitions used**
+
+- **IQR rule (k=1.5):** flag ret < Q1−1.5·IQR or ret > Q3+1.5·IQR.
+- **Z-score (|z|>3):** flag extreme standardized moves.
+- **Winsorizing (1%/99%):** clip extremes to reduce leverage without dropping rows.
+
+**Why these choices**
+
+- Robust baseline (IQR) + interpretable threshold (Z) cover skew and scale.
+- Winsorizing preserves sample size for modeling while dampening tail risk.
+
+**Sensitivity**
+
+- We compare summary stats and an AR(1) fit across: All / Filtered (no outliers) / Winsorized.
+- Outputs saved under: `project/data/processed/outliers/`.
+
+**Risks**
+
+- Crash days are real; over-filtering can hide risk.
+- Thresholds are assumptions; we monitor the effect and may adjust with domain evidence.
 
 ## Lifecycle Mapping
 
