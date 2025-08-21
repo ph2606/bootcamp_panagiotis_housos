@@ -58,8 +58,6 @@ ASML stock moves around earnings, guidance, sector flows, and macro prints. The 
 
 **Assumptions & Risks:** EOD equity data; educational use; median imputation is appropriate for light missingness; scaling stats should be versioned if used across train/test splits.
 
-
-
 ## Outliers & Risk Assumptions (Stage 07)
 
 **Definitions used**
@@ -82,6 +80,18 @@ ASML stock moves around earnings, guidance, sector flows, and macro prints. The 
 
 - Crash days are real; over-filtering can hide risk.
 - Thresholds are assumptions; we monitor the effect and may adjust with domain evidence.
+
+
+
+## Feature Engineering (Stage 09)
+
+**Momentum:** `ma_5`, `ma_21`, `mom_5`, `mom_21`, `rsi_14` — trend & overextension (motivated by EDA).
+**Volatility:** `vol_21` (rolling std of returns), `range_21` (avg intraday range).
+**Calendar:** `dow` one-hots (`dow_0..dow_4`), `is_month_end`, `is_quarter_end`.
+**Interaction:** `ret_x_vol21` (captures regime effects).
+**Targets:** `y_next_ret`, `y_next_up` (next-day; for labels only).
+
+Implementation: see `project/src/features.py`. Engineered dataset saved under `project/data/processed/` as `asml_features_<timestamp>.(csv|parquet)`.
 
 ## Lifecycle Mapping
 
