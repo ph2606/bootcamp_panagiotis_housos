@@ -93,6 +93,15 @@ ASML stock moves around earnings, guidance, sector flows, and macro prints. The 
 
 Implementation: see `project/src/features.py`. Engineered dataset saved under `project/data/processed/` as `asml_features_<timestamp>.(csv|parquet)`.
 
+
+## Evaluation & Risk Communication (Stage 11)
+
+**Uncertainty:** RMSE CIs via bootstrap (i.i.d.) and Gaussian (parametric) assumptions.
+**Scenarios:** Baseline linear vs polynomial feature (still linear in β).
+**Subgroups:** Volatility regimes (low/high) — report per-segment RMSE and residual distributions.
+**Outputs:** figures under `project/outputs/eval/`, tables under `project/data/processed/` if saved.
+**Notes:** Document where conclusions change under assumptions; prefer bootstrap for fat-tailed residuals.
+
 ## Lifecycle Mapping
 
 Goal → Stage → Deliverable
