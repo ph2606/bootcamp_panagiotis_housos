@@ -102,6 +102,86 @@ Implementation: see `project/src/features.py`. Engineered dataset saved under `p
 **Outputs:** figures under `project/outputs/eval/`, tables under `project/data/processed/` if saved.
 **Notes:** Document where conclusions change under assumptions; prefer bootstrap for fat-tailed residuals.
 
+
+# ASML — Results & Recommendation (Stage 12)
+
+## Executive Summary
+
+- **Headline:** [One sentence: what’s the decision insight? e.g., “Baseline model provides directionally useful signals; accuracy degrades in high volatility.”]
+- **Impact:** [1 bullet on use-case / decision window]
+- **Risk:** [1 bullet on where it fails or is sensitive]
+
+---
+
+## Key Visuals & Interpretation
+
+### 1) Next-day Return: True vs Predicted (Test) with ~95% Gaussian Band
+
+![True vs Pred with band](images/fig1_pred_vs_true_with_gaussian_band.png)
+
+**Insight:** [1–2 lines: e.g., “Model tracks small moves; tails widen vs band during spikes.”]
+**So what:** [decision: e.g., “Use for light tilts; avoid large bets on volatile days.”]
+**Assumption note:** Gaussian band may **underestimate** tail risk.
+
+### 2) Scenario Comparison — RMSE with Bootstrap 95% CIs
+
+![Scenario RMSE](images/fig2_scenario_rmse_bootstrap.png)
+
+**Insight:** [e.g., “Adding polynomial of momentum reduced RMSE by ~X%, but within CI overlap.”]
+**So what:** [e.g., “Transformation offers marginal benefit; not statistically decisive.”]
+
+### 3) RMSE by Volatility Regime — Baseline
+
+![RMSE by regime](images/fig3_rmse_by_vol_regime.png)
+
+**Insight:** [e.g., “Error ~Y% higher in high-vol regime.”]
+**So what:** [e.g., “De-emphasize predictions during high-vol periods or switch to alt model.”]
+
+---
+
+## Sensitivity Summary (Tables)
+
+**Scenario RMSE (Bootstrap CI)** — see `images/table_scenario_rmse.csv`
+**Regime RMSE** — see `images/table_regime_rmse.csv`
+
+Brief: [1–2 lines on direction & magnitude of changes from baseline.]
+
+---
+
+## Assumptions & Risks
+
+- **Data/Target:** next-day return; features use only info available at t (no leakage).
+- **Uncertainty:** bootstrap treats residuals i.i.d.; real time-dependence may widen true CIs.
+- **Model form:** linear in coefficients; polynomial term adds curvature without changing estimator class.
+- **Regime sensitivity:** performance degrades in high volatility.
+- **Operational:** transaction costs / slippage not modeled here.
+
+---
+
+## Decision Implications (Now What)
+
+- **Use:** [e.g., “Directional tilt when volatility is below median; small position sizing.”]
+- **Monitor:** [e.g., “Residuals and RMSE by regime weekly; flag spikes.”]
+- **Next steps:** [e.g., “Rolling validation; Ridge/Lasso; event/calendar features; variance modeling (WLS).”]
+
+
+## Productization (Stage 13)
+
+### How to Run from a Fresh Clone
+
+1. Create/activate a Python env, then:
+   ```bash
+   pip install -r project/requirements.txt
+   ```
+
+
+---
+
+## Appendix (Optional)
+
+- Metrics (test): R² = [ ], RMSE = [ ], MAE = [ ]
+- Links: methodology notebooks (`/notebooks/stage11_eval_risk.ipynb`, `/notebooks/stage10b_timeseries_or_classification.ipynb`)
+
 ## Lifecycle Mapping
 
 Goal → Stage → Deliverable
