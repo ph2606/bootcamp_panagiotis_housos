@@ -5,9 +5,16 @@ from pathlib import Path
 import sys
 import numpy as np
 
+from pathlib import Path
+import sys
+
+# Always resolve paths relative to this file
 project_root = Path(__file__).resolve().parent
-sys.path.append(str(project_root / "src"))
-from productize import load_artifacts, vector_from_payload
+src_path = project_root / "src"
+if str(src_path) not in sys.path:
+    sys.path.insert(0, str(src_path))
+
+from src.productize import load_artifacts, vector_from_payload
 
 st.title("ASML Next-Day Return — Demo")
 

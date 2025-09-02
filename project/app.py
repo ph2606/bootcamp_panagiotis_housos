@@ -7,11 +7,32 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 import sys
 
+from pathlib import Path
+import sys
+
+# Always resolve paths relative to this file
 project_root = Path(__file__).resolve().parent
-sys.path.append(str(project_root / "src"))
-from productize import load_artifacts, vector_from_payload, run_full_training_and_save
+src_path = project_root / "src"
+if str(src_path) not in sys.path:
+    sys.path.insert(0, str(src_path))
+
+from src.productize import load_artifacts, vector_from_payload, run_full_training_and_save
 
 app = Flask(__name__)
+
+@app.get("/")
+def index():
+    return (
+        "<h3>ASML API</h3>"
+        "<ul>"
+        "<li><a href='/health'>/health</a></li>"
+        "<li><a href='/predict/0.001'>/predict/0.001</a></li>"
+        "<li><a href='/predict/0.001/-0.002'>/predict/0.001/-0.002</a></li>"
+        "<li><a href='/plot'>/plot</a></li>"
+        "</ul>"
+        "<p>POST /predict with JSON: {\"ret\": 0.001, \"ret_lag1\": -0.002, ...}</p>"
+    )
+
 
 # Load model on startup; if missing, attempt training
 try:
